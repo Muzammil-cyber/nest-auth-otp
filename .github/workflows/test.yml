@@ -27,8 +27,7 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4 # Installs pnpm
-        with:
-          version: 10 # Specifies the pnpm version to install (optional if packageManager in package.json)
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile # Runs pnpm install to get project dependencies
       - name: Run tests
