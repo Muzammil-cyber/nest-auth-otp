@@ -25,14 +25,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4 # Installs pnpm
         with:
-          node-version: 22
-          cache: 'npm'
-
+          version: 10 # Specifies the pnpm version to install (optional if packageManager in package.json)
       - name: Install dependencies
-        run: npm ci
-
+        run: pnpm install --frozen-lockfile # Runs pnpm install to get project dependencies
       - name: Run tests
-        run: npm run test
+        run: pnpm test # Executes your project's tests using pnpm
