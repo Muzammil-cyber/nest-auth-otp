@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: production
+      # Map GitHub Secrets to env vars
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      MAIL_PORT: ${{secrets.MAIL_PORT}}
+      MAIL_HOST: ${{secrets.MAIL_HOST}}
+      MAIL_USER: ${{secrets.MAIL_USER}}
+      MAIL_PASS: ${{secrets.MAIL_PASS}}
+      MAIL_FROM: ${{secrets.MAIL_FROM}}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
